@@ -1,15 +1,113 @@
-# Your code goes here.
-# You can delete these comments, but do not change the name of this file
-# Write your code to expect a terminal of 80 characters wide and 24 rows high
+
+        
 import random
 import time
+import os
 
+def readFile(fileName):
+        fileObj = open(fileName, "r") #opens the file in read mode
+        words = fileObj.read().splitlines() #puts the file into an array
+        fileObj.close()
+        return words
+        
+def screen_clear():
+   # for mac and linux(here, os.name is 'posix')
+   if os.name == 'posix':
+      _ = os.system('clear')
+   else:
+      # for windows platfrom
+      _ = os.system('cls')
+      
 # Initial Steps to invite in the game:
-print("\nWelcome to Hangman game\n")
+screen_clear()
+print("\nWelcome to Hangman game V0.6\n")
 name = input("Enter your name: ")
 print("Hello " + name + "! Good Luck!" "The game is about to start")
-time.sleep(2)
 
+def print_man(nr_error):
+    screen_clear()
+    match nr_error:
+        case 0:
+            print("   _____ \n"
+                  "  |     | \n"
+                  "  |      \n"
+                  "  |      \n"
+                  "  |      \n"
+                  "  |      \n"
+                  "  |      \n"
+                  "__|__\n")    
+        case 1:
+            print("   _____ \n"
+                  "  |     |\n"
+                  "  |     |\n"
+                  "  |      \n"
+                  "  |      \n"
+                  "  |      \n"
+                  "  |      \n"
+                  "__|__\n")    
+        case 2:
+            print("   _____ \n"
+                  "  |     | \n"
+                  "  |     |\n"
+                  "  |     | \n"
+                  "  |      \n"
+                  "  |     \n"
+                  "  |     \n"
+                  "__|__\n") 
+        case 3:
+            print("   _____ \n"
+                  "  |     | \n"
+                  "  |     |\n"
+                  "  |     | \n"
+                  "  |     O \n"
+                  "  |     \n"
+                  "  |     \n"
+                  "__|__\n") 
+        case 4:
+            print("   _____ \n"
+                  "  |     | \n"
+                  "  |     |\n"
+                  "  |     | \n"
+                  "  |     O \n"
+                  "  |    / \n"
+                  "  |     \n"
+                  "__|__\n") 
+        case 5:
+            print("   _____ \n"
+                  "  |     | \n"
+                  "  |     |\n"
+                  "  |     | \n"
+                  "  |     O \n"
+                  "  |    /|\n"
+                  "  |    \n"
+                  "__|__\n") 
+        case 6:
+            print("   _____ \n"
+                  "  |     | \n"
+                  "  |     |\n"
+                  "  |     | \n"
+                  "  |     O \n"
+                  "  |    /|\ \n"
+                  "  |     \n"
+                  "__|__\n") 
+        case 7:
+            print("   _____ \n"
+                  "  |     | \n"
+                  "  |     |\n"
+                  "  |     | \n"
+                  "  |     O \n"
+                  "  |    /|\ \n"
+                  "  |    /  \n"
+                  "__|__\n") 
+        case 8:
+            print("   _____ \n"
+                  "  |     | \n"
+                  "  |     |\n"
+                  "  |     | \n"
+                  "  |     O \n"
+                  "  |    /|\ \n"
+                  "  |    / \ \n"
+                  "__|__\n") 
 
 def rules_desc():
     """ Displays rules to the user
@@ -48,9 +146,8 @@ def main():
     global already_guessed
     global length 
     global play_game
-	
-    words_to_guess = ["jianiuariy","boirdoir","imigie","filimi","priomisie","kidisi","liunigis","dioilil","rhiyimie","diamiagie"
-                   ,"plianits"]
+    
+    words_to_guess = readFile('animals.txt')
     word = random.choice(words_to_guess)
 #save the word
     original_word=word
@@ -68,6 +165,7 @@ def game_loop():
     while play_game not in ["y", "n","Y","N"]:
         play_game = input("Do You want to play again? y = yes, n = no \n")
     if play_game == "y":
+        screen_clear()
         main()
     elif play_game == "n":
         print("Thank you for Playing! We expect you back again!")
@@ -81,7 +179,7 @@ def hangman():
     global already_guessed
     global play_game
     global original_word    
-    max_attempts = 5
+    max_attempts = 8
     guess = input("This is the secret Word: " + display + " Enter your guess: \n")
     guess = guess.strip()
     if len(guess.strip()) == 0 or guess <= "9":
@@ -107,71 +205,15 @@ def hangman():
     
     else:
         attempts += 1
-
-        if attempts == 1:
-            time.sleep(1)
-            print("   _____ \n"
-                  "  |      \n"
-                  "  |      \n"
-                  "  |      \n"
-                  "  |      \n"
-                  "  |      \n"
-                  "  |      \n"
-                  "__|__\n")
-            print("Oops!!Wrong guess. " + str(max_attempts - attempts) + " guesses remaining\n")
-
-        elif attempts == 2:
-            time.sleep(1)
-            print("   _____ \n"
-                  "  |     | \n"
-                  "  |     |\n"
-                  "  |      \n"
-                  "  |      \n"
-                  "  |      \n"
-                  "  |      \n"
-                  "__|__\n")
-            print("Oops!!Wrong guess. " + str(max_attempts - attempts) + " guesses remaining\n")
-
-        elif attempts == 3:
-           time.sleep(1)
-           print("   _____ \n"
-                 "  |     | \n"
-                 "  |     |\n"
-                 "  |     | \n"
-                 "  |      \n"
-                 "  |      \n"
-                 "  |      \n"
-                 "__|__\n")
-           print("Oops!!Wrong guess. " + str(max_attempts - attempts) + " guesses remaining\n")
-
-        elif attempts == 4:
-            time.sleep(1)
-            print("   _____ \n"
-                  "  |     | \n"
-                  "  |     |\n"
-                  "  |     | \n"
-                  "  |     O \n"
-                  "  |      \n"
-                  "  |      \n"
-                  "__|__\n")
-            print("Oops!!Wrong guess. " + str(max_attempts - attempts) + " last guess remaining\n")
-
-        elif attempts == 5:
-            time.sleep(1)
-            print("   _____ \n"
-                  "  |     | \n"
-                  "  |     |\n"
-                  "  |     | \n"
-                  "  |     O \n"
-                  "  |    /|\ \n"
-                  "  |    / \ \n"
-                  "__|__\n")
-            print("Sorry!! You have lost this game. You are hanged!!!\n")
+        print_man(attempts)
+        print("Oops!!Wrong guess. " + str(max_attempts - attempts) + " guesses remaining\n")
+    if(attempts == max_attempts):
+        print("Sorry!! You have lost this game. You are hanged!!!\n")
 #print the correct word
-            print("The word was:",original_word)
+        print("The word was:",original_word)
             
-            print("your attempts:",already_guessed,word)
-            game_loop()
+        print("your attempts:",already_guessed,word)
+        game_loop()
 
     if word == '_' * length:
         print("Congrats! You have won this game!")
